@@ -1,6 +1,7 @@
 module Enemy {
     requires Common;
     requires CommonBullet;
+    requires CommonEnemy;
 
     uses dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
 
