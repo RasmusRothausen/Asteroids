@@ -26,17 +26,20 @@ class Game {
     private final List<IGamePluginService> gamePluginServices;
     private final List<IEntityProcessingService> entityProcessingServices;
     private final List<IPostEntityProcessingService> postEntityProcessingServices;
+    private final ScoreClient scoreClient;
 
     Game(List<IGamePluginService> gamePluginServices,
          List<IEntityProcessingService> entityProcessingServices,
-         List<IPostEntityProcessingService> postEntityProcessingServices) {
+         List<IPostEntityProcessingService> postEntityProcessingServices,
+         ScoreClient scoreClient) {
         this.gamePluginServices = gamePluginServices;
         this.entityProcessingServices = entityProcessingServices;
         this.postEntityProcessingServices = postEntityProcessingServices;
+        this.scoreClient = scoreClient;
     }
 
     public void start(Stage window) throws Exception {
-        Text text = new Text(10, 20, "Asteroids");
+        Text text = new Text(10, 20, "Score: 0");
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gameWindow.getChildren().add(text);
 
@@ -105,6 +108,17 @@ class Game {
     }
 
     private void draw() {
+        for (var node : gameWindow.getChildren()) {
+            if (node instanceof Text) {
+                try {
+                    Long score = scoreClient.addScore(0L);
+                    ((Text) node).setText("Score: " + score);
+                } catch (Exception e) {
+                    // scoring service not available
+                }
+            }
+        }
+
         for (Entity polygonEntity : polygons.keySet()) {
             if (!world.getEntities().contains(polygonEntity)) {
                 Polygon removedPolygon = polygons.get(polygonEntity);

@@ -7,10 +7,10 @@ module Core {
     requires spring.beans;
     requires spring.core;
 
-    opens dk.sdu.mmmi.cbse.main to 
-        javafx.graphics, 
-        spring.core, 
-        spring.beans, 
+    opens dk.sdu.mmmi.cbse.main to
+        javafx.graphics,
+        spring.core,
+        spring.beans,
         spring.context;
 
     uses dk.sdu.mmmi.cbse.common.services.IGamePluginService;

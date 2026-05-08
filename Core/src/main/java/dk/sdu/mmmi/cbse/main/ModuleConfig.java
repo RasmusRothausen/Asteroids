@@ -14,7 +14,13 @@ class ModuleConfig {
 
     @Bean
     public Game game() {
-        return new Game(gamePluginServices(), entityProcessingServices(), postEntityProcessingServices());
+        return new Game(gamePluginServices(), entityProcessingServices(),
+                postEntityProcessingServices(), scoreClient());
+    }
+
+    @Bean
+    public ScoreClient scoreClient() {
+    return new ScoreClient();
     }
 
     @Bean
