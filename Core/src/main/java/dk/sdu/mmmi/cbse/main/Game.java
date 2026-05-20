@@ -7,7 +7,7 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
-import java.util.List;
+import dk.sdu.mmmi.cbse.common.util.ServiceLocator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javafx.animation.AnimationTimer;
@@ -23,18 +23,9 @@ class Game {
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
-    private final List<IGamePluginService> gamePluginServices;
-    private final List<IEntityProcessingService> entityProcessingServices;
-    private final List<IPostEntityProcessingService> postEntityProcessingServices;
     private final ScoreClient scoreClient;
 
-    Game(List<IGamePluginService> gamePluginServices,
-         List<IEntityProcessingService> entityProcessingServices,
-         List<IPostEntityProcessingService> postEntityProcessingServices,
-         ScoreClient scoreClient) {
-        this.gamePluginServices = gamePluginServices;
-        this.entityProcessingServices = entityProcessingServices;
-        this.postEntityProcessingServices = postEntityProcessingServices;
+    Game(ScoreClient scoreClient) {
         this.scoreClient = scoreClient;
     }
 
@@ -73,7 +64,7 @@ class Game {
             }
         });
 
-        for (IGamePluginService plugin : gamePluginServices) {
+        for (IGamePluginService plugin : ServiceLocator.INSTANCE.locateAll(IGamePluginService.class)) {
             plugin.start(gameData, world);
         }
         for (Entity entity : world.getEntities()) {
@@ -99,10 +90,10 @@ class Game {
     }
 
     private void update() {
-        for (IEntityProcessingService service : entityProcessingServices) {
+        for (IEntityProcessingService service : ServiceLocator.INSTANCE.locateAll(IEntityProcessingService.class)) {
             service.process(gameData, world);
         }
-        for (IPostEntityProcessingService service : postEntityProcessingServices) {
+        for (IPostEntityProcessingService service : ServiceLocator.INSTANCE.locateAll(IPostEntityProcessingService.class)) {
             service.process(gameData, world);
         }
     }
@@ -118,7 +109,6 @@ class Game {
                 }
             }
         }
-
         for (Entity polygonEntity : polygons.keySet()) {
             if (!world.getEntities().contains(polygonEntity)) {
                 Polygon removedPolygon = polygons.get(polygonEntity);
