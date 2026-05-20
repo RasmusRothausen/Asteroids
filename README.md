@@ -10,9 +10,15 @@ copy Enemy\\target\\Enemy-1.0-SNAPSHOT.jar plugins\\
 
 copy CommonEnemy\\target\\CommonEnemy-1.0-SNAPSHOT.jar plugins\\
 
+copy Player\\target\\Player-1.0-SNAPSHOT.jar plugins\\
+
+copy Bullet\\target\\Bullet-1.0-SNAPSHOT.jar plugins\\
+
+copy CommonBullet\\target\\CommonBullet-1.0-SNAPSHOT.jar plugins\\
+
 \-------------------------------------------------------------------
 
-set MODS=Common/target/Common-1.0-SNAPSHOT.jar;CommonBullet/target/CommonBullet-1.0-SNAPSHOT.jar;CommonAsteroids/target/CommonAsteroids-1.0-SNAPSHOT.jar;Core/target/Core-1.0-SNAPSHOT.jar;Bullet/target/Bullet-1.0-SNAPSHOT.jar;Player/target/Player-1.0-SNAPSHOT.jar;Asteroids/target/Asteroids-1.0-SNAPSHOT.jar;Collision/target/Collision-1.0-SNAPSHOT.jar
+set MODS=Common/target/Common-1.0-SNAPSHOT.jar;CommonBullet/target/CommonBullet-1.0-SNAPSHOT.jar;CommonAsteroids/target/CommonAsteroids-1.0-SNAPSHOT.jar;Core/target/Core-1.0-SNAPSHOT.jar;Asteroids/target/Asteroids-1.0-SNAPSHOT.jar;Collision/target/Collision-1.0-SNAPSHOT.jar
 
 \-------------------------------------------------------------------
 
